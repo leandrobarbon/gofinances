@@ -14,14 +14,20 @@ import {
   TransactionsList
 } from "./styles";
 
+export interface DataListProps extends TransactionsCardProps {
+  id: string;
+}
+
 
 import { HighlightCard } from "../../components/HighlightCard";
-import { TransactionsCard } from "../../components/TransactionsCard";
+import { TransactionsCard, TransactionsCardProps } from "../../components/TransactionsCard";
 import { View } from 'react-native';
 
 export function Dashboard() {
-  const data = [
+  const data: DataListProps[] = [
     {
+      id: '1',
+      type: 'positive',
       title: "Desenvolvimento de site",
       amount: "R$ 12.000,00",
       category: {
@@ -31,22 +37,26 @@ export function Dashboard() {
       date: '13/04/2020'
     },
     {
-      title: "Desenvolvimento de site",
-      amount: "R$ 12.000,00",
+      id: '2',
+      type: 'negative',
+      title: 'Hamburgueria Pizzy',
+      amount: "R$ 59,00",
       category: {
-        name: 'Vendas',
-        icon: 'dollar-sign'
+        name: 'Alimentação',
+        icon: 'coffee'
       },
-      date: '13/04/2020'
+      date: '10/04/2020'
     },
     {
-      title: "Desenvolvimento de site",
-      amount: "R$ 12.000,00",
+      id: '3',
+      type: 'negative',
+      title: 'Aluguel do apartamento',
+      amount: "R$ 1.200,00",
       category: {
-        name: 'Vendas',
-        icon: 'dollar-sign'
+        name: 'Casa',
+        icon: 'home'
       },
-      date: '13/04/2020'
+      date: '10/04/2022'
     },
   ]
 
@@ -92,8 +102,8 @@ export function Dashboard() {
 
         <TransactionsList
           data={data}
+          keyExtractor={item => item.id}
           renderItem={({ item }) => <TransactionsCard data={item} />}
-          showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => <View style={{ marginBottom: 16 }} />}
         />
 
