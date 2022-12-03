@@ -1,5 +1,3 @@
-
-import { HighlightCard } from "../../components/HighlightCard";
 import {
   Container,
   Header,
@@ -10,10 +8,49 @@ import {
   UserGreeting,
   UserName,
   Icon,
-  HighlightCards
+  HighlightCards,
+  Transactions,
+  Title,
+  TransactionsList
 } from "./styles";
 
+
+import { HighlightCard } from "../../components/HighlightCard";
+import { TransactionsCard } from "../../components/TransactionsCard";
+import { View } from 'react-native';
+
 export function Dashboard() {
+  const data = [
+    {
+      title: "Desenvolvimento de site",
+      amount: "R$ 12.000,00",
+      category: {
+        name: 'Vendas',
+        icon: 'dollar-sign'
+      },
+      date: '13/04/2020'
+    },
+    {
+      title: "Desenvolvimento de site",
+      amount: "R$ 12.000,00",
+      category: {
+        name: 'Vendas',
+        icon: 'dollar-sign'
+      },
+      date: '13/04/2020'
+    },
+    {
+      title: "Desenvolvimento de site",
+      amount: "R$ 12.000,00",
+      category: {
+        name: 'Vendas',
+        icon: 'dollar-sign'
+      },
+      date: '13/04/2020'
+    },
+  ]
+
+
   return (
     <Container>
       <Header>
@@ -49,6 +86,18 @@ export function Dashboard() {
           lastTransaction="01 à 16 de abril"
         />
       </HighlightCards>
+
+      <Transactions>
+        <Title>Listagem</Title>
+
+        <TransactionsList
+          data={data}
+          renderItem={({ item }) => <TransactionsCard data={item} />}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={() => <View style={{ marginBottom: 16 }} />}
+        />
+
+      </Transactions>
     </Container>
   )
 }
