@@ -12,8 +12,11 @@ export default {
     attention_light: '#E83F5B80',
 
     shape: '#FFF',
+
     title: '#363F5F',
     text: '#969CB2',
+    text_dark: '#363F5F',
+
     background: '#F0F2F5',
   },
 
