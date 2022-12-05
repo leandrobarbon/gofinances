@@ -1,9 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from "react-native";
 import { useForm } from "react-hook-form";
+import {
+  useNavigation,
+  NavigationProp,
+  ParamListBase,
+} from "@react-navigation/native";
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import uuid from 'react-native-uuid';
 
 import {
   Container,
@@ -46,7 +52,9 @@ export function Register() {
     name: 'Categoria',
   });
 
-  const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
+  const { navigate }: NavigationProp<ParamListBase> = useNavigation();
+
+  const { control, reset, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
@@ -69,30 +77,40 @@ export function Register() {
     if (category.key === 'category')
       return Alert.alert('Selecione a categoria')
 
-    const data = {
+    const newTransaction = {
+      id: String(uuid.v4()),
       name: form.name,
       amount: form.amount,
       TransactionType,
-      category: category.key
+      category: category.key,
+      date: new Date()
     }
 
     try {
-      await AsyncStorage.setItem(dataKey, JSON.stringify(data));
+      const data = await AsyncStorage.getItem(dataKey);
+      const currentData = data ? JSON.parse(data) : [];
+
+      const dataFormatted = [
+        ...currentData,
+        newTransaction
+      ]
+
+      await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted));
+
+      reset();
+      setTransactionType('');
+      setCategory({
+        key: 'category',
+        name: 'Categoria',
+      });
+
+      navigate('Listagem');
 
     } catch (error) {
       console.log(error);
       Alert.alert("Nao foi possivel salvar")
     }
   }
-
-  useEffect(() => {
-    async function loadData() {
-      const data = await AsyncStorage.getItem(dataKey);
-      console.log(JSON.parse(data!));
-    }
-
-    loadData();
-  }, [])
 
   return (
     <TouchableWithoutFeedback
