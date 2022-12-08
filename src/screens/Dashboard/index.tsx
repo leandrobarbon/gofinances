@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -60,11 +60,17 @@ export function Dashboard() {
       });
 
     setData(transactionsFormatted);
+    console.log(transactionsFormatted);
+
   }
 
   useEffect(() => {
     loadTrasactions();
   }, [])
+
+  useFocusEffect(useCallback(() => {
+    loadTrasactions();
+  }, []));
 
   return (
     <Container>
