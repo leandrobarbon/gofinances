@@ -88,6 +88,14 @@ export function Dashboard() {
 
     setTransactios(transactionsFormatted);
 
+    const LastTransactionEntries =
+      new Date(
+        Math.max.apply(Math, transactions
+          .filter((transaction: DataListProps) => transaction.type === 'positive')
+          .map((transaction: DataListProps) => new Date(transaction.date).getTime())))
+
+    console.log(LastTransactionEntries);
+
     const total = entriesTotal - expensiveTotal;
 
     setHightlightData({
