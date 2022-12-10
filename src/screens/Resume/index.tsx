@@ -12,7 +12,11 @@ export function Resume() {
         <Title>Resumo por categoria</Title>
       </Header>
 
-      <HistoryCard />
+      <HistoryCard
+        title="Compras"
+        amount="R$ 150,50"
+        color="red"
+      />
 
     </Container>
   )
